@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>SocketsSpikeClient</title>
+  <meta charset="utf-8">
+  <link href="main.css" rel="stylesheet">
+  <script type="text/javascript" src="main.js"></script>
+</head>
+
+<body>
+  <h1>A client for SocketsSpike</h1>
+  <div>
+    <h3>Connect</h3>
+    <input type="button" id="connectButton" value="Connect" onclick="connect()">
+  </div>
+  <div>
+    <h3>Send message</h3>
+    <input id="text" type="text" autocomplete="off" onkeyup="handleKey(event)" disabled>
+    <input type="button" id="sendButton" value="Send" onclick="send()" disabled>
+  </div>
+  <div>
+    <h3>Messages</h3>
+    <ul id="messagesList"></ul>
+  </div>
+</body>
+
+</html>
