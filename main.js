@@ -17,9 +17,13 @@ function connect() {
 
   connection.onmessage = function (evt) {
     console.log("***ONMESSAGE");
-    var text = evt.data;
+
+    var json = JSON.parse(evt.data);
+
     console.log("Message received: ");
-    console.dir(text);
+    console.log(json);
+
+    var text = json.data;
 
     if (text.length) {
       var messagesList = document.getElementById("messagesList");
