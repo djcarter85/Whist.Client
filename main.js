@@ -2,7 +2,7 @@
 var connection = null;
 
 function connect() {
-  var serverUrl = "wss://mmh507vxo1.execute-api.eu-west-2.amazonaws.com/Prod";
+  var serverUrl = "wss://o12gqarlw1.execute-api.eu-west-2.amazonaws.com/Prod";
 
   connection = new WebSocket(serverUrl);
   console.log("***CREATED WEBSOCKET");
