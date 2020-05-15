@@ -10,18 +10,28 @@
 
 <body>
   <h1>A client for SocketsSpike</h1>
+
   <div>
     <h3>Connect</h3>
     <input type="button" id="connectButton" value="Connect" onclick="connect()">
   </div>
+
   <div>
     <h3>Operations</h3>
-    <input type="button" id="createGameButton" value="Create Game" onclick="createGame()" disabled>
+    <div>
+      <input type="button" id="createGameButton" value="Create Game" onclick="createGame()">
+    </div>
+    <div>
+      <input id="gameIdText" type="text" autocomplete="off">
+      <input type="button" id="joinGameButton" value="Join Game" onclick="joinGame()">
+    </div>
   </div>
+
   <div>
     <h3>Messages</h3>
     <ul id="messagesList"></ul>
   </div>
+
 </body>
 
 </html>

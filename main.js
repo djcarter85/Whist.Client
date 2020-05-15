@@ -9,8 +9,6 @@ function connect() {
 
   connection.onopen = function (evt) {
     console.log("***ONOPEN");
-    document.getElementById("connectButton").disabled = true;
-    document.getElementById("createGameButton").disabled = false;
   };
   console.log("***CREATED ONOPEN");
 
@@ -24,8 +22,13 @@ function connect() {
 
     var messageType = json.messageType;
 
-    if (messageType == "gameCreated") {
-      appendMessage("Game created. Game ID: " + json.game.id + ".");
+    switch (messageType) {
+      case "gameCreated":
+        appendMessage("Game created. Game ID: " + json.game.id + ".");
+        break;
+      case "gameJoined":
+        appendMessage("Game joined. Game ID: " + json.game.id + ".");
+        break;
     }
   };
   console.log("***CREATED ONMESSAGE");
@@ -39,10 +42,22 @@ function appendMessage(text) {
 }
 
 function createGame() {
-  console.log("***SEND");
+  console.log("***CREATE GAME");
   var msg = {
     gameType: "whist",
     operation: "createGame"
+  };
+  connection.send(JSON.stringify(msg));
+}
+
+function joinGame() {
+  console.log("***JOIN GAME");
+  var msg = {
+    gameType: "whist",
+    operation: "joinGame",
+    parameters: {
+      gameId: document.getElementById("gameIdText").value
+    }
   };
   connection.send(JSON.stringify(msg));
 }
