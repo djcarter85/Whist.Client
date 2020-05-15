@@ -2,7 +2,7 @@
 var connection = null;
 
 function connect() {
-  var serverUrl = "wss://o12gqarlw1.execute-api.eu-west-2.amazonaws.com/Prod";
+  var serverUrl = "wss://r0o98hefw6.execute-api.eu-west-2.amazonaws.com/Prod";
 
   connection = new WebSocket(serverUrl);
   console.log("***CREATED WEBSOCKET");
@@ -39,7 +39,7 @@ function send() {
   console.log("***SEND");
   var msg = {
     data: document.getElementById("text").value,
-    message: "sendmessage"
+    gameType: "whist"
   };
   connection.send(JSON.stringify(msg));
   document.getElementById("text").value = "";
