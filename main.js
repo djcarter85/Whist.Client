@@ -10,8 +10,7 @@ function connect() {
   connection.onopen = function (evt) {
     console.log("***ONOPEN");
     document.getElementById("connectButton").disabled = true;
-    document.getElementById("text").disabled = false;
-    document.getElementById("sendButton").disabled = false;
+    document.getElementById("createGameButton").disabled = false;
   };
   console.log("***CREATED ONOPEN");
 
@@ -23,32 +22,27 @@ function connect() {
     console.log("Message received: ");
     console.log(json);
 
-    var text = json.data;
+    var messageType = json.messageType;
 
-    if (text.length) {
-      var messagesList = document.getElementById("messagesList");
-      var li = document.createElement("li");
-      li.appendChild(document.createTextNode(text));
-      messagesList.appendChild(li);
+    if (messageType == "gameCreated") {
+      appendMessage("Game created. Game ID: " + json.game.id + ".");
     }
   };
   console.log("***CREATED ONMESSAGE");
 }
 
-function send() {
-  console.log("***SEND");
-  var msg = {
-    data: document.getElementById("text").value,
-    gameType: "whist"
-  };
-  connection.send(JSON.stringify(msg));
-  document.getElementById("text").value = "";
+function appendMessage(text) {
+  var messagesList = document.getElementById("messagesList");
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(text));
+  messagesList.appendChild(li);
 }
 
-function handleKey(evt) {
-  if (evt.keyCode === 13 || evt.keyCode === 14) {
-    if (!document.getElementById("sendButton").disabled) {
-      send();
-    }
-  }
+function createGame() {
+  console.log("***SEND");
+  var msg = {
+    gameType: "whist",
+    operation: "createGame"
+  };
+  connection.send(JSON.stringify(msg));
 }
