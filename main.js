@@ -1,14 +1,16 @@
 "use strict";
 var connection = null;
+var playerId = null;
 
 function connect() {
-  var serverUrl = "wss://r0o98hefw6.execute-api.eu-west-2.amazonaws.com/Prod";
+  var serverUrl = "wss://88gjrw5klc.execute-api.eu-west-2.amazonaws.com/Prod";
 
   connection = new WebSocket(serverUrl);
   console.log("***CREATED WEBSOCKET");
 
   connection.onopen = function (evt) {
     console.log("***ONOPEN");
+    createPlayer();
   };
   console.log("***CREATED ONOPEN");
 
@@ -23,11 +25,15 @@ function connect() {
     var messageType = json.messageType;
 
     switch (messageType) {
+      case "playerCreated":
+        playerId = json.body.playerId;
+        appendMessage("Player created. Player ID: " + json.body.playerId + ".");
+        break;
       case "gameCreated":
-        appendMessage("Game created. Game ID: " + json.game.id + ".");
+        appendMessage("Game created. Game ID: " + json.body.game.id + ".");
         break;
       case "gameJoined":
-        appendMessage("Game joined. Game ID: " + json.game.id + ".");
+        appendMessage("Game joined. Game ID: " + json.body.game.id + ".");
         break;
     }
   };
@@ -41,11 +47,21 @@ function appendMessage(text) {
   messagesList.appendChild(li);
 }
 
+function createPlayer() {
+  console.log("***CREATE PLAYER");
+  var msg = {
+    gameType: "whist",
+    operation: "createPlayer"
+  };
+  connection.send(JSON.stringify(msg));
+}
+
 function createGame() {
   console.log("***CREATE GAME");
   var msg = {
     gameType: "whist",
-    operation: "createGame"
+    operation: "createGame",
+    playerId: playerId
   };
   connection.send(JSON.stringify(msg));
 }
@@ -55,6 +71,7 @@ function joinGame() {
   var msg = {
     gameType: "whist",
     operation: "joinGame",
+    playerId: playerId,
     parameters: {
       gameId: document.getElementById("gameIdText").value
     }
